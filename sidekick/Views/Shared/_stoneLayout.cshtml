@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SideKick - Your Ultimate Study Companion</title>
+
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/Content/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icon Fonts -->
+    <link href="/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="/Content/et-line-font.min.css" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="/Content/magnific-popup.css" rel="stylesheet">
+    <link href="/Content/owl.carousel.css" rel="stylesheet">
+    <link href="/Content/superslides.css" rel="stylesheet">
+    <link href="/Content/vertical.min.css" rel="stylesheet">
+
+    <!-- Chosen StyleSheets -->
+    <link href="~/Scripts/chosen/chosen.min.css" rel="stylesheet" />
+    <link rel="img-src" href="~/Scripts/chosen/chosen-sprite.png" />
+
+    <!-- Template core CSS -->
+    <link href="/Content/template.css" rel="stylesheet">
+    <link href="/Content/Site.css" rel="stylesheet" />
+</head>
+<body ng-app='SidekickApp'>
+
+    <!-- PRELOADER -->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- /PRELOADER -->
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <nav class="navbar navbar-custom font-alt">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- YOU LOGO HERE -->
+                <a class="navbar-brand" href="~/Home">
+                    <!-- IMAGE OR SIMPLE TEXT -->
+                    <p class="light-logo">Sidekick</p>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="custom-collapse">
+
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="~/Home/#hero" class="anim-scroll">Home</a>
+                    </li>
+                    <li>
+                        <a href="~/Home/#about" class="anim-scroll">About</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="~/Home/ToDo" class="dropdown-toggle" data-toggle="dropdown">To-Do List</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="blog.html">Standard</a></li>
+                            <li><a href="blog-single.html">Single post</a></li>
+                            <li><a href="blog-single-2.html">Single post - Video</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="~/Home/Dictionary" class="dropdown-toggle" data-toggle="dropdown">Dictionary</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="portfolio-single.html">Single Work 1</a></li>
+                            <li><a href="portfolio-single-2.html">Single Work 2</a></li>
+                            <li><a href="portfolio-single-3.html">Single Work 3</a></li>
+                            <li><a href="portfolio-single-4.html">Single Work 4 & Youtube</a></li>
+                            <li><a href="portfolio-single-5.html">Single Work 5 & Vimeo</a></li>
+                            <li><a href="portfolio-single-6.html">Single Work 6 & Gallery</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="~/Home/FlashCards" class="dropdown-toggle" data-toggle="dropdown">Flashcards</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="components-1.html">Buttons</a></li>
+                            <li><a href="components-2.html">Iconbox</a></li>
+                            <li><a href="components-3.html">Progress bars</a></li>
+                            <li><a href="components-4.html">Tab & Accordian</a></li>
+                            <li><a href="components-5.html">Columns</a></li>
+                            <li><a href="components-6.html">Modules & Overlays</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Tasks</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="portfolio-gutter-3.html">Spilt decision?</a></li>
+                            <li><a href="portfolio-gutter-4.html">Hungry?</a></li>
+                            <li><a href="portfolio-masonry-3.html">In need of a pun?</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="~/Home/Procrastinate">Procrastinate</a></li>
+                    <li><a href="~/Home/Contact">Contact</a></li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- SOCIAL LINKS -->
+        <div class="copyright">
+            <p>© 2015 Stone Template</p>
+        </div>
+        <!-- /SOCIAL LINKS -->
+
+    </div>
+    <!-- /SIDEBAR -->
+    <!-- WRAPPER -->
+    <div class="wrapper">
+
+        @*renderSection below is only used in the index.cshtml*@
+        @RenderSection("landingPage", required: false)
+
+        <div class="body-content">
+            @RenderBody()
+
+            @*  //copy and edit the module title for each made page:
+                    <section class="module-sm">
+                    <div class="container-fluid container-custom">
+                        <!-- MODULE TITLE -->
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <h2 class="module-title font-alt m-b-0">Buttons</h2>
+                            </div>
+                        </div>
+                        <!-- /MODULE TITLE -->
+                    </div>
+                </section>
+
+                <hr class="divider">
+                <section class="module">
+                    <div class="container-fluid container-custom">
+
+                        //body goes here
+                    </div>
+                </section>
+            *@
+        </div>
+
+        <hr class="divider">
+
+        <!-- FOOTER -->
+
+        <footer class="footer module-overlay-dark-3">
+            <div class="container-fluid container-custom">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="contact-info font-alt">
+                            <li><a href="#">Sidekick.dev</a></li>
+                            <li>Made with <span class="fa fa-heart-o"></span> in the IE</li>
+                        </ul>
+                        <div class="copyright text-center font-alt">
+                            © 2015 <a href="#">Stone</a>, All Rights Reserved.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCROLLTOP -->
+                <a class="to-top-link" href="#top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+
+            </div>
+        </footer>
+
+        <!-- /FOOTER -->
+
+    </div>
+    <!-- /WRAPPER -->
+
+    <script type="text/javascript">
+        var APPNAME = 'SidekickApp';
+    </script>
+
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="~/Scripts/sidekick.js"></script>
+
+    @Scripts.Render("~/bundles/JS_Dependencies")
+    @Scripts.Render("~/Scripts/chosen/chosen.js")
+    @Scripts.Render("~/Scripts/angular/angular.js")
+    <script src="~/Scripts/sidekick/sidekick.module.js"></script>
+    <script src="~/Scripts/sidekick/base.service.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        sidekick.page.startUp = function () {
+            $(document).ready(function () {
+                console.log("All script files and theme dependencies have been loaded!");
+            });
+        }
+    </script>
+</body>
+</html>

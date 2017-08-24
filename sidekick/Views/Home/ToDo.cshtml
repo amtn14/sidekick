@@ -1,0 +1,307 @@
+﻿@{
+    ViewBag.Title = "To-Do List";
+    Layout = "~/Views/Shared/_stoneLayout.cshtml";
+}
+
+<style>
+    .zeroTasks {
+        border: 2px solid lightcyan;
+        background-color: lightcyan;
+        padding: 10px;
+        width: auto;
+    }
+
+    ul li {
+        font-family: 'Roboto Condensed', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 400;
+        color: #111;
+        margin: 0 0 20px;
+        font-size: 16px;
+    }
+
+    .clicked {
+        text-decoration: line-through;
+    }
+</style>
+
+<section class="module-sm">
+    <div class="container-fluid container-custom">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt m-b-0">To-Do List</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+<section class="module-xs text-center">
+    <div class="container-fluid container-custom">
+        <div>
+            <div class="iconbox-icon zeroTasks text-center">
+                <div ng-show="toDo.hasTasks">
+                    <h5>You currently have no items on your to-do list. A ribbon for your efforts!</h5>
+                    <p class="icon-ribbon"></p>
+                </div>
+                <div ng-hide="toDo.hasTasks">
+                    <h5>You currently have item(s) on your to-do list. Let's get started!</h5>
+                    <p class='icon-laptop'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section ng-controller="toDoController as toDo">
+    <div class="container-fluid container-custom row">
+        <!--Left hand panel-->
+        @*<div class="col-md-3">*@
+        @*</div>*@
+        <!--End of 'Left-Hand Panel'-->
+        <!--To-Do List-->
+        <div class="col-md-4">
+            <h4><strong>Step one: </strong>Define the...</h4>
+            <form class="text-center">
+                <select data-placeholder="Please select one of the following" id="ddList" class="chosen-select form-control" tabindex="15">
+                    <option value=""></option>
+                    <option value="main">main tasks you wish to accomplish today</option>
+                    <option value="followUp">follow-up tasks - medium priority</option>
+                    <option value="backburner">things to keep in the backburner</option>
+                </select>
+                <br />
+                <br />
+                <input class="form-control input-lg text-center" type="text" placeholder="What would you like to accomplish today?">
+                <br />
+                <h4><em>(Press 'Enter' to save your task)</em></h4>
+                @*<button type="submit" class="btn btn-circle btn-dark">submit</button>*@
+            </form>
+            <hr>
+            <br />
+            <!-- PROGRESS BAR -->
+            <h5 class="progress-title">All in a day's work</h5>
+            <br />
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" aria-valuenow="30" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <span class="font-serif">
+                        <span class="progress-value"></span>%
+                    </span>
+                </div>
+            </div>
+            <!-- /PROGRESS BAR -->
+            @*
+                <hr>
+                <div class="iconbox iconbox-left">
+                    <div class="iconbox-icon">
+                        <span class="icon-clipboard"></span>
+                    </div>
+                    <div class="iconbox-header">
+                        <h4 class="iconbox-title font-alt">Today's Goals</h4>
+                    </div>
+                    <div class="iconbox-content">
+                        <p>Create your personal to-do list here. Nothing beats the satisifcation of crossing off tasks off a list!</p>
+                    </div>
+                </div>
+                <div class="iconbox iconbox-left">
+                    <div class="iconbox-icon">
+                        <span class="icon-scope"></span>
+                    </div>
+                    <div class="iconbox-header">
+                        <h4 class="iconbox-title font-alt">Eye on the target</h4>
+                    </div>
+                    <div class="iconbox-content">
+                        <p>We decided to follow a 1-3-5 rule for this list. Start your day tackling your biggest task, followed by 3 medium-sized tasks and as the cherry on top, finish up with your 5 smallest and last priority duties for the day.</p>
+                        Credits for the '1-3-5 rule' goes towards: <a href="https://www.themuse.com/advice/a-better-todo-list-the-135-rule">The Muse</a>
+                    </div>
+                </div>*@
+        </div>
+
+        <div class="col-md-8">
+            <h4><strong>step two: </strong> It's go time.</h4>
+            <h3><u>The main tasks</u> you absolutely need to get done today:</h3>
+            <ul class="main">
+                <li ng-repeat="item in toDo.main"><a href="#">{{item.task}}</a></li>
+            </ul>
+            <h3><strong>Follow-up tasks</strong> that also need to get done today:</h3>
+            <ul class="followUp">
+                <li ng-repeat="item in toDo.followUp"><a href="#">{{item.task}}</a></li>
+            </ul>
+            <h3>Not for today, but <em>keeping in the backburner</em>:</h3>
+            <ul class="backburner">
+                <li ng-repeat="item in toDo.backburner"><a href="#">{{item.task}}</a></li>
+            </ul>
+        </div>
+        <!--End of To-Do List-->
+    </div>
+</section>
+
+@section scripts {
+    <script src="~/Scripts/ajax/todo.services.js"></script>
+
+    <script type="text/javascript">
+
+        (function () {
+            "use strict";
+            angular.module(APPNAME).factory('$toDoService', toDoServiceFactory);
+            toDoServiceFactory.$inject = ['$baseService'];
+            function toDoServiceFactory($baseService) {
+                var aSabioServiceObject = sidekick.services.toDo;
+                var newService = $baseService.merge(true, {}, aSabioServiceObject, $baseService);
+                return newService;
+            };
+        })();
+
+        (function () {
+            angular.module(APPNAME).controller('toDoController', ToDoController);
+            ToDoController.$inject = ['$scope', '$toDoService'];
+            function ToDoController($scope, $toDoService) {
+                var vm = this;
+                vm.scope = $scope;
+                vm.$toDoService = $toDoService;
+                vm.ajaxError = _ajaxError;
+
+                //this is a wrapper for our small dependency on $scope
+                vm.notify = vm.$toDoService.getNotifier($scope);
+
+                vm.getAllTaskSuccess = _getAllTaskSuccess;
+                vm.count = 0;
+                vm.hasTasks = false;
+                vm.main = [];
+                vm.followUp = [];
+                vm.backburner = [];
+
+                vm.$toDoService.getAllTasks(vm.getAllTaskSuccess, vm.ajaxError);
+
+                vm.checkCount = _checkCount;
+                function _checkCount() {
+                    vm.notify(function () {
+                        if (vm.count == 0) {
+                            vm.noTasks = false;
+                        } else {
+                            vm.hasTasks = true;
+                        }
+                    });
+                }
+
+                //main ajax error call:
+                function _ajaxError(error) {
+                    console.log("error", error);
+                }
+
+                //success handler for the httpGET - toDoTasks:
+                function _getAllTaskSuccess(data) {
+                    console.log("getSuccess", data, data.length);
+                    vm.count = data.length;
+                    vm.checkCount();
+
+                    for (var i = 0; i < data.length; i++) {
+                        var tempObj = {};
+
+                        tempObj.id = data[i].Id;
+                        tempObj.task = data[i].Task;
+                        tempObj.priority = data[i].Priority;
+                        tempObj.created = data[i].Created;
+                        tempObj.deleted = data[i].Deleted;
+
+                        if (data[i].Priority == 'main') {
+                            vm.main.push(tempObj);
+                        } else if (data[i].Priority == 'followUp') {
+                            vm.followUp.push(tempObj);
+                        } else if (data[i].Priority == 'backburner') {
+                            vm.backburner.push(tempObj);
+                        }
+                    }
+
+                    vm.notify(function () {
+                    });
+
+                };
+            }
+        })();
+
+        //changes the well/div area below 'TO-DO' header:
+        //var tasksToDo = "<h5>You currently have item(s) on your to-do list. Let's get started!</h5><p class='icon-laptop'></p>"
+        //var count = 0;
+
+        //function checkCount() {
+        //    if (count > 0) {
+        //        $('.zeroTasks').html(tasksToDo);
+        //    }
+        //}
+
+
+        //main ajax error call:
+        //var onError = function (error) {
+        //    console.log("error", error);
+        //}
+
+        //not quite working yet, it's behind
+        $("ul").on("click", 'li a', function () {
+            var clicked = $(this);
+            clicked.toggleClass('clicked');
+        });
+
+        //success handler for the httpGET - toDoTasks:
+        //var getSuccess = function (data) {
+        //    console.log("getSuccess", data, data.length);
+        //    count = data.length;
+        //    checkCount();
+        //    for (var i = 0; i < data.length; i++) {
+        //        var tempTask = data[i].Task;
+        //        var tempPriority = data[i].Priority;
+
+        //        styleAndAppend(tempTask, tempPriority);
+        //    }
+        //};
+
+        //invoking ajax call:
+        //sidekick.services.toDo.getAllTasks(getSuccess, onError);
+
+        //activate jQuery chosen:
+        $(".chosen-select").chosen({ width: "100%" });
+
+        //function to take care of the styling and appending for the to-do section:
+        var styleAndAppend = function (text, location) {
+            var styling = '<li><a href="#">' + text + '</a></li>';
+            var whereToAppend = "." + location;
+            $(whereToAppend).append(styling);
+        }
+
+        //on 'enter' for adding new tasks:
+        $("input").keypress(function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                //console.log("Number of tasks:", count);
+                var userText = $(this).val();
+                var userDdSelect = $('#ddList').chosen().val();
+                console.log(userText, userDdSelect);
+
+                var data = {
+                    task: userText,
+                    priority: userDdSelect
+                };
+
+                //ajax call - defined under '/Scripts/ajax'
+                sidekick.services.toDo.insertTask(data, success, onError);
+
+                //sucess + error handler for the function above:
+                var success = function (data) {
+                    console.log("insertSuccess", data);
+                }
+
+                var onError = function (error) {
+                    console.log("insertError", error);
+                }
+
+                //clears input field:
+                $('input').val('');
+
+                //create<li>&append here:
+                styleAndAppend(userText, userDdSelect);
+            }
+        });
+
+    </script>
+
+}
